@@ -173,6 +173,167 @@ const abi = [
     type: "function",
   },
 ];
+// const abi = [
+//   {
+//     anonymous: false,
+//     inputs: [
+//       {
+//         indexed: true,
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "MetricsUpdated",
+//     type: "event",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "storeMetrics",
+//     outputs: [],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "clientMetrics",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "getMetrics",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+// ];
 const contractWithSigner = new ethers.Contract(contractAddress, abi, wallet);
 
 // API endpoint to store metrics
