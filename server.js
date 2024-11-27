@@ -445,7 +445,7 @@ require("dotenv").config();
 const cors = require("cors");
 const redis = require("redis");
 const Queue = require("bull");
-
+const logger = require("./logger");
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -654,6 +654,7 @@ const store_metric = async (req, res) => {
     f1Score,
   });
   console.log("Metrics queued for storage");
+
   res.status(200).json({ message: "Metrics queued for storage" });
 };
 app.post("/store-metrics", store_metric);
@@ -672,10 +673,22 @@ metricsQueue.process(async (job) => {
       recall,
       f1Score
     );
+
     console.log("Transaction sent:", tx.hash);
     await tx.wait();
+    queueData = {
+      clientId,
+      round,
+      accuracy,
+      precision,
+      recall,
+      f1Score,
+      txHash: tx.hash,
+    };
     console.log("Transaction mined:", tx.hash);
+    logger.info(`Pushing data to Redis queue: ${JSON.stringify(queueData)}`);
   } catch (error) {
+    logger.error(`Error pushing data to Redis: ${err}`);
     console.error("Failed to store metrics:", error);
     throw error;
   }

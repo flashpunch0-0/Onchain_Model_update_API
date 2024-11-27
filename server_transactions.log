@@ -1,0 +1,12 @@
+2024-11-10T16:32:39.957Z [info]: Pushing data to Redis queue: {"clientId":90,"round":45,"accuracy":87,"precision":67,"recall":54,"f1Score":3}
+2024-11-10T16:32:51.247Z [info]: Pushing data to Redis queue: {"clientId":91,"round":45,"accuracy":87,"precision":67,"recall":54,"f1Score":3}
+2024-11-10T16:33:15.371Z [info]: Pushing data to Redis queue: {"clientId":93,"round":45,"accuracy":87,"precision":67,"recall":54,"f1Score":3}
+2024-11-10T16:33:26.741Z [info]: Pushing data to Redis queue: {"clientId":90,"round":45,"accuracy":87,"precision":67,"recall":54,"f1Score":3}
+2024-11-10T16:33:37.962Z [info]: Pushing data to Redis queue: {"clientId":95,"round":45,"accuracy":87,"precision":67,"recall":54,"f1Score":3}
+2024-11-10T16:34:02.103Z [info]: Pushing data to Redis queue: {"clientId":96,"round":45,"accuracy":87,"precision":67,"recall":54,"f1Score":3}
+2024-11-10T19:51:01.626Z [info]: Pushing data to Redis queue: {"clientId":98,"round":45,"accuracy":87,"precision":67,"recall":54,"f1Score":3,"txHash":"0xa49bf80376e1dfc31b4aea11cb4b5015cf22adeda342a3d3264176d26744d7a4"}
+2024-11-10T19:51:17.029Z [info]: Pushing data to Redis queue: {"clientId":99,"round":45,"accuracy":87,"precision":67,"recall":54,"f1Score":3,"txHash":"0x948648eb9f1e0f3e43f92af780dbd445c2efa8647ba15884b3ae04c326cce0aa"}
+2024-11-10T19:52:01.323Z [info]: Pushing data to Redis queue: {"clientId":3,"round":1,"accuracy":1,"precision":1,"recall":1,"f1Score":1,"txHash":"0x28f40fc38bcd84049ad9b6f75fc87f5ccae32a03bb724a8a74ca0b9d1fd8e19e"}
+2024-11-10T19:52:16.828Z [info]: Pushing data to Redis queue: {"clientId":1,"round":1,"accuracy":1,"precision":1,"recall":1,"f1Score":1,"txHash":"0x21ec4044453fd9f1b02e0a1d17bcb2a93d10f0ae060097f0c6f25363ab9619b3"}
+2024-11-10T19:52:27.966Z [info]: Pushing data to Redis queue: {"clientId":1,"round":2,"accuracy":1,"precision":1,"recall":1,"f1Score":1,"txHash":"0xa17a2a9e13980f0e08ba5fbeeb4081ff1b36d36147bf640973a16dbe97559af4"}
+2024-11-10T19:52:39.182Z [info]: Pushing data to Redis queue: {"clientId":3,"round":2,"accuracy":1,"precision":1,"recall":1,"f1Score":1,"txHash":"0xdfc758507d70681af14ef1a309fe0fb345d9b3804b79f00cc052c396760b7274"}
