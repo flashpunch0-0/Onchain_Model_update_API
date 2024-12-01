@@ -10,6 +10,168 @@ console.log("PRIVATE_KEY:", process.env.PRIVATE_KEY);
 const contractAddress = process.env.CONTRACT_ADDRESS;
 
 // ABI (Application Binary Interface) of your contract
+// const abi = [
+//   {
+//     anonymous: false,
+//     inputs: [
+//       {
+//         indexed: true,
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "MetricsUpdated",
+//     type: "event",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "clientMetrics",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "getMetrics",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "storeMetrics",
+//     outputs: [],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+// ];
+
 const abi = [
   {
     anonymous: false,
@@ -28,114 +190,18 @@ const abi = [
       },
       {
         indexed: false,
-        internalType: "uint256",
-        name: "accuracy",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "precision",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "recall",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "f1Score",
-        type: "uint256",
+        internalType: "uint256[]",
+        name: "modelParameters",
+        type: "uint256[]",
       },
     ],
-    name: "MetricsUpdated",
+    name: "ModelParametersUpdated",
     type: "event",
   },
   {
     inputs: [
       {
         internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "clientMetrics",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "accuracy",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "precision",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "recall",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "f1Score",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "clientId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "round",
-        type: "uint256",
-      },
-    ],
-    name: "getMetrics",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
         name: "clientId",
         type: "uint256",
       },
@@ -145,33 +211,70 @@ const abi = [
         type: "uint256",
       },
       {
-        internalType: "uint256",
-        name: "accuracy",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "precision",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "recall",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "f1Score",
-        type: "uint256",
+        internalType: "uint256[]",
+        name: "modelParameters",
+        type: "uint256[]",
       },
     ],
-    name: "storeMetrics",
+    name: "storeModelParameters",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "clientModelParameters",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "clientId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "round",
+        type: "uint256",
+      },
+    ],
+    name: "getModelParameters",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
-
 // Create contract instance
 const privateKey = process.env.PRIVATE_KEY; // Use the private key of your wallet
 const wallet = new ethers.Wallet(privateKey, provider);
@@ -250,32 +353,52 @@ const contractWithSigner = contract.connect(wallet);
 // const contract = new ethers.Contract(contractAddress, abi, wallet);
 
 // Function to store metrics
-async function storeMetrics(
-  clientId,
-  round,
-  accuracy,
-  precision,
-  recall,
-  f1Score
-) {
+// async function storeMetrics(
+//   clientId,
+//   round,
+//   accuracy,
+//   precision,
+//   recall,
+//   f1Score
+// ) {
+//   try {
+//     console.log("Sending transaction to store metrics...");
+//     const tx = await contractWithSigner.storeMetrics(
+//       clientId,
+//       round,
+//       accuracy,
+//       precision,
+//       recall,
+//       f1Score
+//     );
+//     console.log("Transaction sent:", tx.hash);
+
+//     const receipt = await tx.wait();
+//     console.log("Transaction mined. Receipt:", receipt);
+//   } catch (error) {
+//     console.error("Error storing metrics:", error);
+//   }
+// }
+
+// // Example usage
+// storeMetrics(68, 56, 95, 90, 92, 93);
+async function storeModelParameters(clientId, round, modelParameters) {
   try {
-    console.log("Sending transaction to store metrics...");
-    const tx = await contractWithSigner.storeMetrics(
+    console.log("Sending transaction to store model parameters...");
+    const tx = await contractWithSigner.storeModelParameters(
       clientId,
       round,
-      accuracy,
-      precision,
-      recall,
-      f1Score
+      modelParameters
     );
     console.log("Transaction sent:", tx.hash);
 
     const receipt = await tx.wait();
     console.log("Transaction mined. Receipt:", receipt);
   } catch (error) {
-    console.error("Error storing metrics:", error);
+    console.error("Error storing model parameters:", error);
   }
 }
 
 // Example usage
-storeMetrics(68, 56, 95, 90, 92, 93);
+const modelParameters = [95, 90, 92, 93]; // Example model parameters
+storeModelParameters(68, 56, modelParameters);
