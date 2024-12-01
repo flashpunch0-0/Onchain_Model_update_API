@@ -466,6 +466,10 @@ const metricsQueue = new Queue("metricsQueue", {
     host: "172.24.237.72",
     port: 6379,
   },
+  settings: {
+    maxStalledCount: 5, // Number of times a job can be stalled before being considered failed
+    retryProcessDelay: 10000, // Delay before retrying jobs (10 seconds)
+  },
 });
 
 // Configure ethers.js provider
@@ -635,6 +639,168 @@ const abi = [
     type: "function",
   },
 ];
+
+// const abi = [
+//   {
+//     anonymous: false,
+//     inputs: [
+//       {
+//         indexed: true,
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         indexed: false,
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "MetricsUpdated",
+//     type: "event",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "clientMetrics",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "getMetrics",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "clientId",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "round",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "accuracy",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "precision",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "recall",
+//         type: "uint256",
+//       },
+//       {
+//         internalType: "uint256",
+//         name: "f1Score",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "storeMetrics",
+//     outputs: [],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+// ];
 const contractWithSigner = new ethers.Contract(contractAddress, abi, wallet);
 
 // API endpoint to store metrics
@@ -693,9 +859,13 @@ metricsQueue.process(async (job) => {
     throw error;
   }
 });
+metricsQueue.on("failed", (job, err) => {
+  console.error(`Job failed: ${job.id}, Error: ${err}`);
+});
 
 // API endpoint to get metrics
 app.get("/get-metrics", async (req, res) => {
+  console.log(req.query);
   try {
     const { clientId, round } = req.query;
 
@@ -704,6 +874,7 @@ app.get("/get-metrics", async (req, res) => {
     }
 
     const metrics = await contractWithSigner.getMetrics(clientId, round);
+    console.log(metrics);
     res.status(200).json({
       accuracy: metrics[0].toString(),
       precision: metrics[1].toString(),

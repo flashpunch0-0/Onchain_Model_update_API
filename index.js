@@ -58,44 +58,6 @@ const abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "clientId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "round",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "accuracy",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "precision",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "recall",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "f1Score",
-        type: "uint256",
-      },
-    ],
-    name: "storeMetrics",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
         name: "",
         type: "uint256",
       },
@@ -170,17 +132,122 @@ const abi = [
     stateMutability: "view",
     type: "function",
   },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "clientId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "round",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "accuracy",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "precision",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "recall",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "f1Score",
+        type: "uint256",
+      },
+    ],
+    name: "storeMetrics",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ];
 
 // Create contract instance
+const privateKey = process.env.PRIVATE_KEY; // Use the private key of your wallet
+const wallet = new ethers.Wallet(privateKey, provider);
 const contract = new ethers.Contract(contractAddress, abi, provider);
 
 // To store metrics, you will need a signer (account with private key)
-const privateKey = process.env.PRIVATE_KEY; // Use the private key of your wallet
-const wallet = new ethers.Wallet(privateKey, provider);
 
 // Set the signer to the contract
 const contractWithSigner = contract.connect(wallet);
+
+// // Function to store metrics
+// async function storeMetrics(
+//   clientId,
+//   round,
+//   accuracy,
+//   precision,
+//   recall,
+//   f1Score
+// ) {
+//   const tx = await contractWithSigner.storeMetrics(
+//     clientId,
+//     round,
+//     accuracy,
+//     precision,
+//     recall,
+//     f1Score
+//   );
+//   console.log("Transaction sent:", tx.hash);
+//   await tx.wait();
+//   console.log("Transaction mined:", tx.hash);
+// }
+
+// // Function to get metrics
+// async function getMetrics(clientId, round) {
+//   const metrics = await contract.getMetrics(clientId, round);
+//   console.log(
+//     "Metrics for clientId:",
+//     clientId,
+//     "round:",
+//     round,
+//     "accuracy:",
+//     metrics[0],
+//     "precision:",
+//     metrics[1],
+//     "recall:",
+//     metrics[2],
+//     "f1Score:",
+//     metrics[3]
+//   );
+// }
+
+// Example usage
+// Store metrics for clientId = 55, round = 1
+// storeMetrics(55, 4, 95, 90, 92, 93);
+
+// Get metrics for clientId = 55, round = 1
+// getMetrics(55, 4);
+// getMetrics(55, 4);
+
+// async function testTransaction() {
+//   try {
+//     console.log("Preparing to send transaction...");
+//     const tx = await contract.storeMetrics(1, 1, 95, 90, 92, 93); // Example placeholder values
+//     console.log("Transaction sent:", tx.hash);
+
+//     const receipt = await tx.wait();
+//     console.log("Transaction mined. Receipt:", receipt);
+//   } catch (error) {
+//     console.error("Error during transaction:", error);
+//   }
+// }
+
+// // Test the transaction
+// testTransaction();
+
+// const contract = new ethers.Contract(contractAddress, abi, wallet);
 
 // Function to store metrics
 async function storeMetrics(
@@ -191,41 +258,24 @@ async function storeMetrics(
   recall,
   f1Score
 ) {
-  const tx = await contractWithSigner.storeMetrics(
-    clientId,
-    round,
-    accuracy,
-    precision,
-    recall,
-    f1Score
-  );
-  console.log("Transaction sent:", tx.hash);
-  await tx.wait();
-  console.log("Transaction mined:", tx.hash);
-}
+  try {
+    console.log("Sending transaction to store metrics...");
+    const tx = await contractWithSigner.storeMetrics(
+      clientId,
+      round,
+      accuracy,
+      precision,
+      recall,
+      f1Score
+    );
+    console.log("Transaction sent:", tx.hash);
 
-// Function to get metrics
-async function getMetrics(clientId, round) {
-  const metrics = await contract.getMetrics(clientId, round);
-  console.log(
-    "Metrics for clientId:",
-    clientId,
-    "round:",
-    round,
-    "accuracy:",
-    metrics[0],
-    "precision:",
-    metrics[1],
-    "recall:",
-    metrics[2],
-    "f1Score:",
-    metrics[3]
-  );
+    const receipt = await tx.wait();
+    console.log("Transaction mined. Receipt:", receipt);
+  } catch (error) {
+    console.error("Error storing metrics:", error);
+  }
 }
 
 // Example usage
-// Store metrics for clientId = 55, round = 1
-// storeMetrics(55, 4, 95, 90, 92, 93);
-
-// Get metrics for clientId = 55, round = 1
-getMetrics(55, 4);
+storeMetrics(68, 56, 95, 90, 92, 93);
